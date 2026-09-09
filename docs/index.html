@@ -4,33 +4,401 @@
   <meta charset="UTF-8">
   <title>Senior & Staff Backend Developer — Interview Prep Knowledge Base</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <meta name="description" content="Exhaustive Senior & Staff Backend Developer Interview Preparation Documentation">
+  <meta name="description" content="Exhaustive Senior & Staff Backend Developer Interview Preparation Documentation — 14 Modules, 44 In-Depth Guides.">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+  <!-- Docsify Theme & Dark/Light Switcher -->
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-darklight-theme@latest/dist/style.min.css">
+
+  <!-- Sidebar Collapse Styles -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/sidebar.min.css">
+
+  <!-- In-Page Right TOC Styles -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-plugin-toc@latest/dist/light.css">
+
   <style>
     :root {
       --docsify-example-panels-document-width: 100%;
+      --theme-color: #10b981;
+      --accent: #10b981;
     }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Content Layout */
     .markdown-section {
-      max-width: 960px;
-      padding: 30px 40px;
-      font-size: 16px;
-      line-height: 1.7;
+      max-width: 1020px;
+      padding: 36px 48px;
+      font-size: 15.5px;
+      line-height: 1.75;
     }
+
+    .markdown-section h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.2rem;
+      padding-bottom: 0.6rem;
+      border-bottom: 1px solid var(--borderColor);
+    }
+
+    .markdown-section h2 {
+      font-size: 1.55rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-top: 2.2rem;
+      margin-bottom: 0.8rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid var(--borderColor);
+    }
+
+    .markdown-section h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      margin-top: 1.8rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .markdown-section h4 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-top: 1.4rem;
+    }
+
+    /* Code Blocks & Inline Code */
+    .markdown-section code {
+      font-family: 'JetBrains Mono', SFMono-Regular, Consolas, Menlo, monospace !important;
+    }
+
+    .markdown-section pre {
+      border-radius: 8px !important;
+      border: 1px solid var(--borderColor) !important;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+      margin: 1.4rem 0 !important;
+    }
+
     .markdown-section pre>code {
-      font-size: 14px;
-      line-height: 1.5;
+      font-size: 13.5px !important;
+      line-height: 1.55 !important;
+      padding: 18px 20px !important;
     }
+
+    .markdown-section :not(pre) > code {
+      font-size: 0.88em !important;
+      padding: 2.5px 6px !important;
+      border-radius: 4px;
+      background: var(--codeBackgroundColor) !important;
+      color: var(--codeTextColor) !important;
+      border: 1px solid var(--borderColor);
+    }
+
+    /* Enhanced Tables */
+    .markdown-section table {
+      display: table !important;
+      width: 100% !important;
+      border-collapse: collapse;
+      margin: 24px 0 !important;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--borderColor);
+      font-size: 14px;
+    }
+
+    .markdown-section th {
+      background: var(--codeBackgroundColor);
+      color: var(--textColor);
+      font-weight: 700;
+      padding: 12px 14px;
+      border-bottom: 2px solid var(--borderColor);
+      text-align: left;
+    }
+
+    .markdown-section td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--borderColor);
+      color: var(--textColor);
+    }
+
+    .markdown-section tr:nth-child(even) td {
+      background: rgba(128, 128, 128, 0.04);
+    }
+
+    /* Blockquotes & Callouts */
+    .markdown-section blockquote {
+      border-left: 4px solid var(--accent) !important;
+      background: rgba(16, 185, 129, 0.07);
+      padding: 14px 18px !important;
+      border-radius: 0 8px 8px 0;
+      margin: 18px 0 !important;
+      color: var(--textColor);
+    }
+
+    .markdown-section blockquote p {
+      margin: 4px 0;
+    }
+
+    /* Left Sidebar Styling */
     .sidebar {
       font-size: 14px;
+      padding-top: 15px;
+      border-right: 1px solid var(--borderColor) !important;
     }
-    .sidebar ul li a {
+
+    .sidebar-nav {
+      padding: 0 16px 40px 16px;
+    }
+
+    .sidebar-nav ul {
+      margin: 0;
+      padding-left: 12px;
+    }
+
+    .sidebar-nav > ul {
+      padding-left: 0;
+    }
+
+    .sidebar-nav li {
+      margin: 4px 0;
+      line-height: 1.5;
+    }
+
+    .sidebar-nav li a {
       font-size: 13.5px;
+      color: var(--sidebarSublink);
+      transition: all 0.15s ease;
+      text-decoration: none;
+      display: block;
+      padding: 4px 8px;
+      border-radius: 6px;
     }
-    table {
-      display: table;
-      width: 100%;
+
+    .sidebar-nav li a:hover {
+      color: var(--accent) !important;
+      background: rgba(16, 185, 129, 0.08);
+    }
+
+    .sidebar-nav li.active > a {
+      color: var(--accent) !important;
+      font-weight: 600 !important;
+      background: rgba(16, 185, 129, 0.12);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 6px 6px 0;
+      padding-left: 10px;
+    }
+
+    /* Collapsible Folder Chevron Enhancement */
+    .sidebar-nav ul:not(.app-sub-sidebar) > li:not(.file)::before {
+      border-color: var(--sidebarSublink) !important;
+      border-width: 2px !important;
+      width: 5px !important;
+      height: 5px !important;
+      top: 11px !important;
+      left: -13px !important;
+      transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.2s ease !important;
+    }
+
+    .sidebar-nav ul:not(.app-sub-sidebar) > li.open::before {
+      transform: rotate(45deg) !important;
+      border-color: var(--accent) !important;
+    }
+
+    .sidebar-nav ul:not(.app-sub-sidebar) > li.collapse::before {
+      transform: rotate(-45deg) !important;
+    }
+
+    .sidebar-nav ul:not(.app-sub-sidebar) > li.folder > strong,
+    .sidebar-nav ul:not(.app-sub-sidebar) > li.folder {
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .sidebar-nav ul:not(.app-sub-sidebar) > li.folder > strong {
+      font-size: 13.5px;
+      color: var(--textColor);
+      display: inline-block;
+      padding: 4px 0;
+    }
+
+    /* Search Box Enhancement */
+    .search {
+      padding: 14px 16px 10px 16px !important;
+      border-bottom: 1px solid var(--borderColor) !important;
+      margin-bottom: 10px;
+    }
+
+    .search .input-wrap {
+      position: relative;
+      margin: 0 !important;
+    }
+
+    .search input {
+      font-family: inherit;
+      font-size: 13px;
+      border-radius: 8px !important;
+      padding: 8px 30px 8px 12px !important;
+      background: var(--codeBackgroundColor) !important;
+      border: 1px solid var(--borderColor) !important;
+      color: var(--textColor) !important;
+      width: 100% !important;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .search input:focus {
+      border-color: var(--accent) !important;
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.25) !important;
+      outline: none;
+    }
+
+    .search .clear-button {
+      right: 8px !important;
+      top: 50% !important;
+      transform: translateY(-50%) !important;
+    }
+
+    .search .matching-post {
+      border-bottom: 1px solid var(--borderColor);
+      padding: 10px 0;
+    }
+
+    .search .matching-post h2 {
+      font-size: 14px;
+      margin: 0 0 4px 0;
+      border: none;
+      padding: 0;
+    }
+
+    .search .matching-post p {
+      font-size: 12px;
+      line-height: 1.4;
+      color: var(--sidebarSublink);
+    }
+
+    /* Right-Side In-Page TOC (docsify-plugin-toc) */
+    @media only screen and (max-width: 1280px) {
+      aside.toc-nav {
+        display: none !important;
+      }
+      section.content {
+        padding-right: 0 !important;
+      }
+    }
+
+    @media only screen and (min-width: 1281px) {
+      section.content {
+        padding-right: 260px !important;
+      }
+      aside.toc-nav {
+        display: block !important;
+        position: fixed;
+        top: 75px;
+        right: 24px;
+        width: 240px;
+        max-height: calc(100vh - 120px);
+        overflow-y: auto;
+        padding-left: 14px;
+        background: transparent !important;
+        border-left: 1px solid var(--borderColor, rgba(255, 255, 255, 0.1));
+        z-index: 90;
+      }
+    }
+
+    .page_toc {
+      position: relative;
+      margin: 0;
+      border: none;
+    }
+
+    .page_toc p.title {
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--blockQuoteColor, #8b949e);
+      margin: 0 0 10px 0;
+      padding: 0;
+    }
+
+    .page_toc div {
+      border-left: 2px solid transparent !important;
+      padding: 3px 0 3px 6px !important;
+      margin: 2px 0;
+      text-indent: 0 !important;
+      cursor: pointer;
+    }
+
+    .page_toc div a {
+      font-size: 12.5px !important;
+      line-height: 1.4 !important;
+      color: var(--sidebarSublink, #8b949e) !important;
+      text-decoration: none;
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      transition: color 0.15s ease;
+    }
+
+    .page_toc div a:hover {
+      color: var(--accent, #10b981) !important;
+    }
+
+    .page_toc div.active {
+      border-left-color: var(--accent, #10b981) !important;
+    }
+
+    .page_toc div.active a span {
+      color: var(--accent, #10b981) !important;
+      font-weight: 600;
+    }
+
+    .page_toc div.lv3 {
+      padding-left: 14px !important;
+      font-size: 11.5px !important;
+    }
+
+    /* Back to Top Button */
+    .back-top {
+      background-color: var(--codeBackgroundColor) !important;
+      color: var(--textColor) !important;
+      border: 1px solid var(--borderColor) !important;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25) !important;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    }
+
+    .back-top:hover {
+      border-color: var(--accent) !important;
+      color: var(--accent) !important;
+    }
+
+    /* Smooth Custom Scrollbars */
+    ::-webkit-scrollbar {
+      width: 7px;
+      height: 7px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--borderColor);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--sidebarSublink);
     }
   </style>
 </head>
@@ -38,71 +406,168 @@
   <div id="app">Loading Staff Interview Prep Knowledge Base...</div>
   <script>
     window.$docsify = {
-      name: 'SWE Interview Prep',
+      name: '<div style="font-weight: 800; font-size: 15px; display: flex; align-items: center; justify-content: center; gap: 8px;"><span>⚡</span><span>Staff Backend Prep</span></div><div style="font-size: 11px; opacity: 0.7; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; margin-top: 4px; text-align: center;">14 Modules &bull; 44 Topics</div>',
       repo: '',
       loadSidebar: true,
-      subMaxLevel: 3,
+      subMaxLevel: 0, // Keep left sidebar clean; in-page navigation handled by right TOC
+      sidebarDisplayLevel: 0, // Top-level modules collapsed until clicked or navigated to
       auto2top: true,
       search: {
-        maxAge: 86400000,
-        paths: 'auto',
-        placeholder: 'Search topics, algorithms, system design...',
-        noData: 'No matching topics found',
-        depth: 4
+        maxAge: 86400000, // 24 hours cache
+        paths: [
+          '/',
+          '/00-core-cs/01-memory-architecture',
+          '/00-core-cs/02-os-fundamentals-concurrency',
+          '/01-ruby-on-rails/01-ruby-language-fundamentals',
+          '/01-ruby-on-rails/02-rails-framework-deep-dive',
+          '/01-ruby-on-rails/03-rails-error-patterns-debugging',
+          '/02-nodejs-express-ts/01-nodejs-runtime-architecture',
+          '/02-nodejs-express-ts/02-express-deep-dive',
+          '/02-nodejs-express-ts/03-typescript-for-backend',
+          '/02-nodejs-express-ts/04-nodejs-debugging-error-patterns',
+          '/03-react-nextjs/01-react-fundamentals-hooks',
+          '/03-react-nextjs/02-nextjs-app-router-rsc',
+          '/04-python-laravel-flutter/01-python-backend',
+          '/04-python-laravel-flutter/02-laravel-php',
+          '/04-python-laravel-flutter/03-flutter-mobile',
+          '/05-databases/01-postgresql-deep-dive',
+          '/05-databases/02-mysql-deep-dive',
+          '/05-databases/03-mongodb-deep-dive',
+          '/05-databases/04-redis-deep-dive',
+          '/06-competitive-programming-dsa/01-data-structures-internals',
+          '/06-competitive-programming-dsa/02-algorithmic-paradigms',
+          '/06-competitive-programming-dsa/03-complexity-and-interview-strategy',
+          '/07-system-design/01-framework-and-staff-mindset',
+          '/07-system-design/02-core-distributed-components',
+          '/07-system-design/03-distributed-systems-patterns',
+          '/07-system-design/04-microservices-and-case-studies',
+          '/08-docker-devops-aws/01-docker-internals-and-recipes',
+          '/08-docker-devops-aws/02-kubernetes-fundamentals',
+          '/08-docker-devops-aws/03-cicd-and-deployment-strategies',
+          '/08-docker-devops-aws/04-aws-cloud-architecture',
+          '/08-docker-devops-aws/05-production-troubleshooting-and-git',
+          '/09-networking-web-internals/01-url-lifecycle-and-nginx',
+          '/09-networking-web-internals/02-http-protocols-and-headers',
+          '/09-networking-web-internals/03-https-tls-and-security',
+          '/09-networking-web-internals/04-realtime-and-api-design',
+          '/10-ai-workflow-integrations/01-ai-assisted-engineering',
+          '/10-ai-workflow-integrations/02-llm-api-and-rag-systems',
+          '/10-ai-workflow-integrations/03-llm-core-concepts',
+          '/11-security-reliability-observability/01-application-security',
+          '/11-security-reliability-observability/02-reliability-patterns',
+          '/11-security-reliability-observability/03-observability-and-incidents',
+          '/12-behavioral-past-projects/01-project-case-studies',
+          '/12-behavioral-past-projects/02-staff-leadership-and-communication',
+          '/13-resume-defense/01-resume-claims-and-technical-qa'
+        ],
+        placeholder: '🔍 Search all topics... (Press /)',
+        noData: 'No matching documentation found',
+        depth: 6,
+        namespace: 'interview-prep-kb'
+      },
+      toc: {
+        tocMaxLevel: 3,
+        target: 'h2, h3',
+        ignoreHeaders: ['<!-- {docsify-ignore} -->', '<!-- {docsify-ignore-all} -->']
+      },
+      progress: {
+        position: 'top',
+        color: 'var(--accent, #10b981)',
+        height: '3px'
       },
       copyCode: {
-        buttonText: 'Copy',
-        errorText: 'Error',
-        successText: 'Copied'
+        buttonText: '📋 Copy',
+        errorText: '❌ Error',
+        successText: '✓ Copied'
       },
       pagination: {
-        previousText: 'PREVIOUS',
-        nextText: 'NEXT',
+        previousText: '← PREVIOUS TOPIC',
+        nextText: 'NEXT TOPIC →',
         crossChapter: true,
         crossChapterText: true
       },
       darklightTheme: {
         siteFont: 'Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
         defaultTheme: 'dark',
-        codeFontFamily: 'Fira Code, SFMono-Regular, Consolas, Menlo, monospace',
-        bodyFontSize: '16px',
+        codeFontFamily: 'JetBrains Mono, SFMono-Regular, Consolas, Menlo, monospace',
+        bodyFontSize: '15.5px',
         dark: {
-          accent: '#42b983',
+          accent: '#10b981',
           toogleBackground: '#ffffff',
           background: '#0d1117',
-          textColor: '#c9d1d9',
+          textColor: '#e6edf3',
           codeTextColor: '#f0f6fc',
           codeBackgroundColor: '#161b22',
           borderColor: '#30363d',
           blockQuoteColor: '#8b949e',
-          highlightColor: '#d29922'
+          highlightColor: '#f59e0b',
+          sidebarSublink: '#8b949e'
         },
         light: {
-          accent: '#42b983',
+          accent: '#059669',
           toogleBackground: '#091a28',
           background: '#ffffff',
-          textColor: '#24292f',
+          textColor: '#1f2328',
           codeTextColor: '#24292f',
           codeBackgroundColor: '#f6f8fa',
           borderColor: '#d0d7de',
-          blockQuoteColor: '#57606a',
-          highlightColor: '#0969da'
+          blockQuoteColor: '#656d76',
+          highlightColor: '#d97706',
+          sidebarSublink: '#57606a'
         }
       }
-    }
+    };
+
+    // Keyboard shortcut UX: Press '/' to focus search, 'Escape' to blur/clear
+    window.addEventListener('keydown', function(e) {
+      if (e.key === '/' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+        e.preventDefault();
+        var searchInput = document.querySelector('.search input');
+        if (searchInput) {
+          searchInput.focus();
+          searchInput.select();
+        }
+      } else if (e.key === 'Escape') {
+        var searchInput = document.querySelector('.search input');
+        if (searchInput && document.activeElement === searchInput) {
+          searchInput.value = '';
+          searchInput.dispatchEvent(new Event('input', { bubbles: true }));
+          searchInput.blur();
+        }
+      }
+    });
   </script>
-  <!-- Docsify v4 -->
+
+  <!-- Docsify v4 Core -->
   <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
-  <!-- Search Plugin -->
+
+  <!-- Full-Text Search Plugin -->
   <script src="//cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.min.js"></script>
+
+  <!-- Sidebar Collapse Plugin -->
+  <script src="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/docsify-sidebar-collapse.min.js"></script>
+
+  <!-- In-Page Right TOC Plugin -->
+  <script src="//cdn.jsdelivr.net/npm/docsify-plugin-toc@latest/dist/docsify-plugin-toc.min.js"></script>
+
+  <!-- Top Reading Progress Bar Plugin -->
+  <script src="//cdn.jsdelivr.net/npm/docsify-progress@latest/dist/progress.min.js"></script>
+
+  <!-- Back To Top Floating Action Button -->
+  <script src="//cdn.jsdelivr.net/npm/docsify-back-to-top/dist/docsify-back-to-top.min.js"></script>
+
   <!-- Copy Code Plugin -->
   <script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
+
   <!-- Pagination Plugin -->
   <script src="//cdn.jsdelivr.net/npm/docsify-pagination/dist/docsify-pagination.min.js"></script>
+
   <!-- Zoom Image Plugin -->
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js"></script>
-  <!-- Dark/Light Theme Plugin -->
+
+  <!-- Dark/Light Mode Switcher -->
   <script src="//cdn.jsdelivr.net/npm/docsify-darklight-theme@latest/dist/index.min.js"></script>
+
   <!-- Prism Syntax Highlighting -->
   <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-ruby.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-typescript.min.js"></script>
@@ -113,5 +578,8 @@
   <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-yaml.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-docker.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-go.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-nginx.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-protobuf.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-diff.min.js"></script>
 </body>
 </html>
