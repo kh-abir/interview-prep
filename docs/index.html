@@ -40,6 +40,19 @@
       padding: 0;
     }
 
+    /* Top Reading Progress Bar */
+    #reading-progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      background: var(--accent, #10b981);
+      width: 0%;
+      z-index: 1002;
+      transition: width 0.12s ease-out;
+      pointer-events: none;
+    }
+
     /* Content Layout */
     .markdown-section {
       max-width: 980px;
@@ -156,18 +169,19 @@
       margin: 4px 0;
     }
 
-    /* Left Sidebar Styling */
+    /* Left Sidebar Styling (Desktop Default) */
     .sidebar {
       font-size: 14px;
-      padding-top: 15px;
+      padding-top: 10px;
       border-right: 1px solid var(--borderColor) !important;
       width: 300px;
       scrollbar-width: thin;
       background: var(--background) !important;
+      z-index: 100;
     }
 
     .sidebar .app-name {
-      margin: 10px 16px 14px 62px !important;
+      margin: 10px 16px 14px 16px !important;
       text-align: left !important;
     }
 
@@ -222,8 +236,9 @@
       margin: 6px 0;
     }
 
+    .sidebar-nav li.nav-folder > p,
     .sidebar-nav li.nav-folder > strong,
-    .sidebar-nav li.nav-folder > p {
+    .sidebar-nav li.nav-folder > span {
       display: flex !important;
       align-items: center !important;
       justify-content: space-between !important;
@@ -238,15 +253,21 @@
       transition: background 0.15s ease, color 0.15s ease !important;
     }
 
+    .sidebar-nav li.nav-folder > p strong {
+      font-weight: 700 !important;
+    }
+
+    .sidebar-nav li.nav-folder > p:hover,
     .sidebar-nav li.nav-folder > strong:hover,
-    .sidebar-nav li.nav-folder > p:hover {
+    .sidebar-nav li.nav-folder > span:hover {
       background: rgba(16, 185, 129, 0.08) !important;
       color: var(--accent) !important;
     }
 
     /* Rotating Chevron Indicator */
+    .sidebar-nav li.nav-folder > p::after,
     .sidebar-nav li.nav-folder > strong::after,
-    .sidebar-nav li.nav-folder > p::after {
+    .sidebar-nav li.nav-folder > span::after {
       content: '' !important;
       display: inline-block !important;
       flex-shrink: 0 !important;
@@ -259,8 +280,9 @@
       margin-left: 8px !important;
     }
 
+    .sidebar-nav li.nav-folder.folder-open > p::after,
     .sidebar-nav li.nav-folder.folder-open > strong::after,
-    .sidebar-nav li.nav-folder.folder-open > p::after {
+    .sidebar-nav li.nav-folder.folder-open > span::after {
       transform: rotate(45deg) !important;
       border-color: var(--accent) !important;
     }
@@ -340,52 +362,150 @@
       color: var(--sidebarSublink);
     }
 
-    /* Modern Clickable Hamburger Menu Button */
-    .sidebar-toggle {
-      position: fixed !important;
-      top: 14px !important;
-      left: 14px !important;
-      bottom: auto !important;
-      width: 40px !important;
-      height: 40px !important;
-      padding: 0 !important;
-      margin: 0 !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      background: var(--codeBackgroundColor, #161b22) !important;
-      border: 1px solid var(--borderColor, #30363d) !important;
-      border-radius: 8px !important;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18) !important;
-      z-index: 1005 !important;
-      cursor: pointer !important;
-      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    /* Desktop View (>= 769px): Sidebar is docked and clear; hide hamburger */
+    @media screen and (min-width: 769px) {
+      .sidebar-toggle {
+        display: none !important;
+      }
+      .sidebar-backdrop {
+        display: none !important;
+      }
     }
 
-    .sidebar-toggle:hover {
-      border-color: var(--accent) !important;
-      transform: scale(1.04);
-    }
+    /* Mobile & Tablet Hamburger Button (<= 768px) */
+    @media screen and (max-width: 768px) {
+      .sidebar-toggle {
+        position: fixed !important;
+        top: 14px !important;
+        left: 14px !important;
+        bottom: auto !important;
+        width: 40px !important;
+        height: 40px !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        background: var(--codeBackgroundColor, #161b22) !important;
+        border: 1px solid var(--borderColor, #30363d) !important;
+        border-radius: 8px !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18) !important;
+        z-index: 1005 !important;
+        cursor: pointer !important;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+      }
 
-    .sidebar-toggle-button {
-      width: 18px !important;
-      height: 14px !important;
-      display: flex !important;
-      flex-direction: column !important;
-      justify-content: space-between !important;
-      align-items: center !important;
-      padding: 0 !important;
-      position: static !important;
-    }
+      .sidebar-toggle:hover {
+        border-color: var(--accent) !important;
+        transform: scale(1.04);
+      }
 
-    .sidebar-toggle span {
-      background-color: var(--textColor, #e6edf3) !important;
-      display: block !important;
-      width: 18px !important;
-      height: 2px !important;
-      border-radius: 2px !important;
-      margin: 0 !important;
-      transition: transform 0.25s ease, opacity 0.25s ease, background-color 0.2s !important;
+      .sidebar-toggle-button {
+        width: 18px !important;
+        height: 14px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        padding: 0 !important;
+        position: static !important;
+      }
+
+      .sidebar-toggle span {
+        background-color: var(--textColor, #e6edf3) !important;
+        display: block !important;
+        width: 18px !important;
+        height: 2px !important;
+        border-radius: 2px !important;
+        margin: 0 !important;
+        transition: transform 0.25s ease, opacity 0.25s ease, background-color 0.2s !important;
+      }
+
+      /* Morph to '✕' on mobile when drawer is open */
+      body.close .sidebar-toggle span:nth-child(1) {
+        transform: translateY(6px) rotate(45deg) !important;
+        background-color: var(--accent) !important;
+      }
+
+      body.close .sidebar-toggle span:nth-child(2) {
+        opacity: 0 !important;
+      }
+
+      body.close .sidebar-toggle span:nth-child(3) {
+        transform: translateY(-6px) rotate(-45deg) !important;
+        background-color: var(--accent) !important;
+      }
+
+      /* Mobile Drawer Layout */
+      .sidebar {
+        left: -300px !important;
+        top: 0 !important;
+        bottom: 0 !important;
+        width: 285px !important;
+        position: fixed !important;
+        z-index: 1000 !important; /* Sidebar sits above backdrop */
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        box-shadow: none !important;
+        padding-top: 60px !important; /* Room for close button */
+      }
+
+      body.close .sidebar {
+        transform: translateX(300px) !important;
+        box-shadow: 6px 0 28px rgba(0, 0, 0, 0.5) !important;
+      }
+
+      /* Mobile Dimmer Backdrop: Behind sidebar (999), in front of content */
+      .sidebar-backdrop {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(2px);
+        -webkit-backdrop-filter: blur(2px);
+        z-index: 999; /* Lower than sidebar (1000) so sidebar is never blurred */
+        opacity: 0;
+        transition: opacity 0.25s ease;
+      }
+
+      body.close .sidebar-backdrop {
+        display: block !important;
+        opacity: 1 !important;
+      }
+
+      .content {
+        left: 0 !important;
+        position: static !important;
+        width: 100% !important;
+        max-width: 100vw !important;
+        transform: none !important;
+        transition: none !important;
+      }
+
+      body.close .content {
+        transform: none !important;
+      }
+
+      .markdown-section {
+        padding: 68px 18px 48px 18px !important;
+        max-width: 100% !important;
+      }
+
+      .markdown-section h1 {
+        font-size: 1.75rem !important;
+      }
+
+      .markdown-section h2 {
+        font-size: 1.35rem !important;
+      }
+
+      .markdown-section table {
+        display: block !important;
+        overflow-x: auto !important;
+        white-space: nowrap !important;
+      }
     }
 
     /* Dark/Light Theme Button Position */
@@ -410,22 +530,6 @@
     #docsify-darklight-theme:hover {
       border-color: var(--accent) !important;
       transform: scale(1.05);
-    }
-
-    /* Mobile Backdrop Overlay */
-    .sidebar-backdrop {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, 0.55);
-      backdrop-filter: blur(3px);
-      -webkit-backdrop-filter: blur(3px);
-      z-index: 999;
-      opacity: 0;
-      transition: opacity 0.25s ease;
     }
 
     /* In-Page Right TOC (docsify-plugin-toc) */
@@ -547,75 +651,7 @@
       box-shadow: 0 6px 20px rgba(16, 185, 129, 0.25) !important;
     }
 
-    /* Responsive Mobile Breakpoint (<= 768px) */
     @media screen and (max-width: 768px) {
-      .sidebar {
-        left: -300px !important;
-        top: 0 !important;
-        bottom: 0 !important;
-        width: 285px !important;
-        position: fixed !important;
-        z-index: 1000 !important;
-        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-        box-shadow: none !important;
-      }
-
-      body.close .sidebar {
-        transform: translateX(300px) !important;
-        box-shadow: 6px 0 28px rgba(0, 0, 0, 0.45) !important;
-      }
-
-      body.close .sidebar-backdrop {
-        display: block !important;
-        opacity: 1 !important;
-      }
-
-      body.close .sidebar-toggle span:nth-child(1) {
-        transform: translateY(6px) rotate(45deg) !important;
-        background-color: var(--accent) !important;
-      }
-
-      body.close .sidebar-toggle span:nth-child(2) {
-        opacity: 0 !important;
-      }
-
-      body.close .sidebar-toggle span:nth-child(3) {
-        transform: translateY(-6px) rotate(-45deg) !important;
-        background-color: var(--accent) !important;
-      }
-
-      .content {
-        left: 0 !important;
-        position: static !important;
-        width: 100% !important;
-        max-width: 100vw !important;
-        transform: none !important;
-        transition: none !important;
-      }
-
-      body.close .content {
-        transform: none !important;
-      }
-
-      .markdown-section {
-        padding: 68px 18px 48px 18px !important;
-        max-width: 100% !important;
-      }
-
-      .markdown-section h1 {
-        font-size: 1.75rem !important;
-      }
-
-      .markdown-section h2 {
-        font-size: 1.35rem !important;
-      }
-
-      .markdown-section table {
-        display: block !important;
-        overflow-x: auto !important;
-        white-space: nowrap !important;
-      }
-
       .custom-back-top {
         bottom: 20px !important;
         right: 18px !important;
@@ -650,12 +686,15 @@
   </style>
 </head>
 <body>
+  <!-- Top Reading Progress Indicator -->
+  <div id="reading-progress-bar"></div>
+
   <div id="app">Loading Staff Interview Prep Knowledge Base...</div>
 
-  <!-- Mobile Backdrop Overlay -->
+  <!-- Mobile Dimmer Backdrop -->
   <div id="sidebar-backdrop" class="sidebar-backdrop"></div>
 
-  <!-- Custom Back-to-Top Floating Button -->
+  <!-- Bulletproof Back-to-Top Floating Button -->
   <button id="custom-back-top" class="custom-back-top" aria-label="Back to Top" title="Back to Top">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
       <polyline points="18 15 12 9 6 15"></polyline>
@@ -667,10 +706,10 @@
       name: '<div style="font-weight: 800; font-size: 14.5px; display: flex; align-items: center; gap: 8px;"><span>⚡</span><span>Staff Backend Prep</span></div><div style="font-size: 11px; opacity: 0.7; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; margin-top: 3px;">14 Modules &bull; 44 Topics</div>',
       repo: '',
       loadSidebar: true,
-      subMaxLevel: 0, // Clean sidebar without heading clutter; in-page right TOC handles sections
+      subMaxLevel: 0,
       auto2top: true,
       search: {
-        maxAge: 86400000, // 24 hours
+        maxAge: 86400000,
         paths: [
           '/',
           '/00-core-cs/01-memory-architecture',
@@ -727,11 +766,6 @@
         target: 'h2, h3',
         ignoreHeaders: ['<!-- {docsify-ignore} -->', '<!-- {docsify-ignore-all} -->']
       },
-      progress: {
-        position: 'top',
-        color: 'var(--accent, #10b981)',
-        height: '3px'
-      },
       copyCode: {
         buttonText: '📋 Copy',
         errorText: '❌ Error',
@@ -775,15 +809,14 @@
       },
       plugins: [
         function(hook, vm) {
-          // Setup collapsible navigation folders on each route change
           hook.doneEach(function() {
             setupCollapsibleNavigation();
           });
 
-          // Setup initial interactive listeners once Docsify is ready
           hook.ready(function() {
             setupBackToTop();
             setupBackdrop();
+            setupReadingProgress();
           });
         }
       ]
@@ -803,7 +836,7 @@
         }
 
         li.classList.add('nav-folder');
-        var header = li.querySelector('strong') || li.querySelector('p') || li.firstElementChild;
+        var header = li.querySelector('p') || li.querySelector('strong') || li.querySelector('span');
 
         if (header && !header.dataset.hasCollapseListener) {
           header.dataset.hasCollapseListener = 'true';
@@ -815,7 +848,7 @@
         }
       });
 
-      // Auto-open active route's folder
+      // Auto-open folder matching active route
       var hash = decodeURIComponent(location.hash);
       var cleanHash = hash.replace(/\.md$/, '');
       var activeLink = sidebarNav.querySelector('a[href="' + hash + '"]') ||
@@ -833,7 +866,7 @@
         }
       }
 
-      // Close mobile drawer when an article link is clicked
+      // Close mobile drawer when an article link is tapped
       sidebarNav.addEventListener('click', function(e) {
         var a = e.target.tagName === 'A' ? e.target : e.target.closest('a');
         if (a) {
@@ -853,7 +886,6 @@
         });
       }
 
-      // Stop propagation on sidebar clicks so interacting with search or folders doesn't close drawer
       var sidebar = document.querySelector('.sidebar');
       if (sidebar) {
         sidebar.addEventListener('click', function(e) {
@@ -862,6 +894,24 @@
           }
         });
       }
+    }
+
+    // Top Reading Progress Logic (Passive & Non-destructive)
+    function setupReadingProgress() {
+      function updateProgress() {
+        var totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+        if (totalHeight > 0) {
+          var scrollPos = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+          var percent = (scrollPos / totalHeight) * 100;
+          var bar = document.getElementById('reading-progress-bar');
+          if (bar) {
+            bar.style.width = Math.min(100, Math.max(0, percent)) + '%';
+          }
+        }
+      }
+      window.addEventListener('scroll', updateProgress, { passive: true });
+      document.addEventListener('scroll', updateProgress, { passive: true });
+      updateProgress();
     }
 
     // Bulletproof Back-to-Top Button Logic
@@ -900,7 +950,6 @@
         e.preventDefault();
         var searchInput = document.querySelector('.search input');
         if (searchInput) {
-          // If sidebar closed on mobile, open it first
           if (window.innerWidth <= 768 && !document.body.classList.contains('close')) {
             document.body.classList.add('close');
           }
@@ -926,9 +975,6 @@
 
   <!-- In-Page Right TOC Plugin -->
   <script src="//cdn.jsdelivr.net/npm/docsify-plugin-toc@latest/dist/docsify-plugin-toc.min.js"></script>
-
-  <!-- Top Reading Progress Bar Plugin -->
-  <script src="//cdn.jsdelivr.net/npm/docsify-progress@latest/dist/progress.min.js"></script>
 
   <!-- Copy Code Plugin -->
   <script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
