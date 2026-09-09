@@ -16,9 +16,6 @@
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-darklight-theme@latest/dist/style.min.css">
 
-  <!-- Sidebar Collapse Styles -->
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/sidebar.min.css">
-
   <!-- In-Page Right TOC Styles -->
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-plugin-toc@latest/dist/light.css">
 
@@ -33,18 +30,23 @@
       box-sizing: border-box;
     }
 
-    body {
+    html, body {
       font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       text-rendering: optimizeLegibility;
       -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      width: 100%;
+      margin: 0;
+      padding: 0;
     }
 
     /* Content Layout */
     .markdown-section {
-      max-width: 1020px;
-      padding: 36px 48px;
+      max-width: 980px;
+      padding: 40px 48px 60px 48px;
       font-size: 15.5px;
       line-height: 1.75;
+      margin: 0 auto;
     }
 
     .markdown-section h1 {
@@ -90,12 +92,14 @@
       border: 1px solid var(--borderColor) !important;
       box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
       margin: 1.4rem 0 !important;
+      overflow-x: auto !important;
     }
 
     .markdown-section pre>code {
       font-size: 13.5px !important;
       line-height: 1.55 !important;
       padding: 18px 20px !important;
+      display: block;
     }
 
     .markdown-section :not(pre) > code {
@@ -107,7 +111,7 @@
       border: 1px solid var(--borderColor);
     }
 
-    /* Enhanced Tables */
+    /* Enhanced Responsive Tables */
     .markdown-section table {
       display: table !important;
       width: 100% !important;
@@ -157,88 +161,136 @@
       font-size: 14px;
       padding-top: 15px;
       border-right: 1px solid var(--borderColor) !important;
+      width: 300px;
+      scrollbar-width: thin;
+      background: var(--background) !important;
+    }
+
+    .sidebar .app-name {
+      margin: 10px 16px 14px 62px !important;
+      text-align: left !important;
+    }
+
+    .sidebar .app-name a {
+      text-decoration: none !important;
+      color: var(--textColor) !important;
+      display: block;
     }
 
     .sidebar-nav {
-      padding: 0 16px 40px 16px;
+      padding: 0 14px 60px 14px;
     }
 
     .sidebar-nav ul {
       margin: 0;
-      padding-left: 12px;
+      padding: 0;
+      list-style: none;
     }
 
-    .sidebar-nav > ul {
-      padding-left: 0;
-    }
-
-    .sidebar-nav li {
+    .sidebar-nav > ul > li {
       margin: 4px 0;
-      line-height: 1.5;
+      line-height: 1.45;
     }
 
-    .sidebar-nav li a {
+    .sidebar-nav a {
       font-size: 13.5px;
       color: var(--sidebarSublink);
       transition: all 0.15s ease;
       text-decoration: none;
       display: block;
-      padding: 4px 8px;
+      padding: 5px 8px;
       border-radius: 6px;
     }
 
-    .sidebar-nav li a:hover {
+    .sidebar-nav a:hover {
       color: var(--accent) !important;
       background: rgba(16, 185, 129, 0.08);
     }
 
-    .sidebar-nav li.active > a {
+    .sidebar-nav li.active > a,
+    .sidebar-nav a.active {
       color: var(--accent) !important;
       font-weight: 600 !important;
-      background: rgba(16, 185, 129, 0.12);
+      background: rgba(16, 185, 129, 0.12) !important;
       border-left: 3px solid var(--accent);
       border-radius: 0 6px 6px 0;
       padding-left: 10px;
     }
 
-    /* Collapsible Folder Chevron Enhancement */
-    .sidebar-nav ul:not(.app-sub-sidebar) > li:not(.file)::before {
-      border-color: var(--sidebarSublink) !important;
-      border-width: 2px !important;
-      width: 5px !important;
-      height: 5px !important;
-      top: 11px !important;
-      left: -13px !important;
-      transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.2s ease !important;
+    /* Collapsible Navigation Folder Headers */
+    .sidebar-nav li.nav-folder {
+      margin: 6px 0;
     }
 
-    .sidebar-nav ul:not(.app-sub-sidebar) > li.open::before {
+    .sidebar-nav li.nav-folder > strong,
+    .sidebar-nav li.nav-folder > p {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      font-size: 13px !important;
+      font-weight: 700 !important;
+      color: var(--textColor) !important;
+      cursor: pointer !important;
+      padding: 7px 10px !important;
+      border-radius: 6px !important;
+      user-select: none !important;
+      margin: 0 !important;
+      transition: background 0.15s ease, color 0.15s ease !important;
+    }
+
+    .sidebar-nav li.nav-folder > strong:hover,
+    .sidebar-nav li.nav-folder > p:hover {
+      background: rgba(16, 185, 129, 0.08) !important;
+      color: var(--accent) !important;
+    }
+
+    /* Rotating Chevron Indicator */
+    .sidebar-nav li.nav-folder > strong::after,
+    .sidebar-nav li.nav-folder > p::after {
+      content: '' !important;
+      display: inline-block !important;
+      flex-shrink: 0 !important;
+      width: 6px !important;
+      height: 6px !important;
+      border-right: 2px solid var(--sidebarSublink) !important;
+      border-bottom: 2px solid var(--sidebarSublink) !important;
+      transform: rotate(-45deg) !important;
+      transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.2s ease !important;
+      margin-left: 8px !important;
+    }
+
+    .sidebar-nav li.nav-folder.folder-open > strong::after,
+    .sidebar-nav li.nav-folder.folder-open > p::after {
       transform: rotate(45deg) !important;
       border-color: var(--accent) !important;
     }
 
-    .sidebar-nav ul:not(.app-sub-sidebar) > li.collapse::before {
-      transform: rotate(-45deg) !important;
+    /* Collapsed Submenus */
+    .sidebar-nav li.nav-folder > ul {
+      display: none !important;
+      padding-left: 10px !important;
+      margin: 3px 0 8px 6px !important;
+      border-left: 1px solid var(--borderColor) !important;
     }
 
-    .sidebar-nav ul:not(.app-sub-sidebar) > li.folder > strong,
-    .sidebar-nav ul:not(.app-sub-sidebar) > li.folder {
-      cursor: pointer;
-      user-select: none;
+    .sidebar-nav li.nav-folder.folder-open > ul {
+      display: block !important;
     }
 
-    .sidebar-nav ul:not(.app-sub-sidebar) > li.folder > strong {
-      font-size: 13.5px;
-      color: var(--textColor);
-      display: inline-block;
-      padding: 4px 0;
+    .sidebar-nav li.nav-folder > ul > li {
+      margin: 2px 0;
+    }
+
+    .sidebar-nav li.nav-folder > ul > li a {
+      font-size: 13px !important;
+      padding: 4.5px 8px !important;
     }
 
     /* Search Box Enhancement */
     .search {
-      padding: 14px 16px 10px 16px !important;
+      padding: 12px 14px 8px 14px !important;
       border-bottom: 1px solid var(--borderColor) !important;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     .search .input-wrap {
@@ -276,7 +328,7 @@
     }
 
     .search .matching-post h2 {
-      font-size: 14px;
+      font-size: 13.5px;
       margin: 0 0 4px 0;
       border: none;
       padding: 0;
@@ -288,8 +340,96 @@
       color: var(--sidebarSublink);
     }
 
-    /* Right-Side In-Page TOC (docsify-plugin-toc) */
-    @media only screen and (max-width: 1280px) {
+    /* Modern Clickable Hamburger Menu Button */
+    .sidebar-toggle {
+      position: fixed !important;
+      top: 14px !important;
+      left: 14px !important;
+      bottom: auto !important;
+      width: 40px !important;
+      height: 40px !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      background: var(--codeBackgroundColor, #161b22) !important;
+      border: 1px solid var(--borderColor, #30363d) !important;
+      border-radius: 8px !important;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18) !important;
+      z-index: 1005 !important;
+      cursor: pointer !important;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    }
+
+    .sidebar-toggle:hover {
+      border-color: var(--accent) !important;
+      transform: scale(1.04);
+    }
+
+    .sidebar-toggle-button {
+      width: 18px !important;
+      height: 14px !important;
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+      padding: 0 !important;
+      position: static !important;
+    }
+
+    .sidebar-toggle span {
+      background-color: var(--textColor, #e6edf3) !important;
+      display: block !important;
+      width: 18px !important;
+      height: 2px !important;
+      border-radius: 2px !important;
+      margin: 0 !important;
+      transition: transform 0.25s ease, opacity 0.25s ease, background-color 0.2s !important;
+    }
+
+    /* Dark/Light Theme Button Position */
+    #docsify-darklight-theme {
+      position: fixed !important;
+      top: 14px !important;
+      right: 16px !important;
+      width: 36px !important;
+      height: 36px !important;
+      border-radius: 8px !important;
+      background-color: var(--codeBackgroundColor) !important;
+      border: 1px solid var(--borderColor) !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+      z-index: 1000 !important;
+      cursor: pointer !important;
+      transition: border-color 0.2s, transform 0.2s !important;
+    }
+
+    #docsify-darklight-theme:hover {
+      border-color: var(--accent) !important;
+      transform: scale(1.05);
+    }
+
+    /* Mobile Backdrop Overlay */
+    .sidebar-backdrop {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.55);
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
+      z-index: 999;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+
+    /* In-Page Right TOC (docsify-plugin-toc) */
+    @media only screen and (max-width: 1199px) {
       aside.toc-nav {
         display: none !important;
       }
@@ -298,22 +438,22 @@
       }
     }
 
-    @media only screen and (min-width: 1281px) {
+    @media only screen and (min-width: 1200px) {
       section.content {
-        padding-right: 260px !important;
+        padding-right: 250px !important;
       }
       aside.toc-nav {
         display: block !important;
-        position: fixed;
-        top: 75px;
-        right: 24px;
-        width: 240px;
-        max-height: calc(100vh - 120px);
-        overflow-y: auto;
-        padding-left: 14px;
+        position: fixed !important;
+        top: 75px !important;
+        right: 20px !important;
+        width: 230px !important;
+        max-height: calc(100vh - 120px) !important;
+        overflow-y: auto !important;
+        padding-left: 14px !important;
         background: transparent !important;
-        border-left: 1px solid var(--borderColor, rgba(255, 255, 255, 0.1));
-        z-index: 90;
+        border-left: 1px solid var(--borderColor, rgba(255, 255, 255, 0.1)) !important;
+        z-index: 90 !important;
       }
     }
 
@@ -371,21 +511,128 @@
       font-size: 11.5px !important;
     }
 
-    /* Back to Top Button */
-    .back-top {
-      background-color: var(--codeBackgroundColor) !important;
-      color: var(--textColor) !important;
-      border: 1px solid var(--borderColor) !important;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25) !important;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    /* Bulletproof Custom Back-to-Top Button */
+    .custom-back-top {
+      position: fixed !important;
+      bottom: 26px !important;
+      right: 24px !important;
+      width: 44px !important;
+      height: 44px !important;
+      border-radius: 50% !important;
+      background: var(--codeBackgroundColor, #161b22) !important;
+      border: 1px solid var(--borderColor, #30363d) !important;
+      color: var(--textColor, #e6edf3) !important;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25) !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      cursor: pointer !important;
+      z-index: 998 !important;
+      opacity: 0 !important;
+      visibility: hidden !important;
+      transform: translateY(12px) !important;
+      transition: opacity 0.25s ease, transform 0.25s ease, border-color 0.2s, background 0.2s, color 0.2s !important;
     }
 
-    .back-top:hover {
+    .custom-back-top.visible {
+      opacity: 1 !important;
+      visibility: visible !important;
+      transform: translateY(0) !important;
+    }
+
+    .custom-back-top:hover {
       border-color: var(--accent) !important;
       color: var(--accent) !important;
+      transform: translateY(-2px) !important;
+      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.25) !important;
     }
 
-    /* Smooth Custom Scrollbars */
+    /* Responsive Mobile Breakpoint (<= 768px) */
+    @media screen and (max-width: 768px) {
+      .sidebar {
+        left: -300px !important;
+        top: 0 !important;
+        bottom: 0 !important;
+        width: 285px !important;
+        position: fixed !important;
+        z-index: 1000 !important;
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        box-shadow: none !important;
+      }
+
+      body.close .sidebar {
+        transform: translateX(300px) !important;
+        box-shadow: 6px 0 28px rgba(0, 0, 0, 0.45) !important;
+      }
+
+      body.close .sidebar-backdrop {
+        display: block !important;
+        opacity: 1 !important;
+      }
+
+      body.close .sidebar-toggle span:nth-child(1) {
+        transform: translateY(6px) rotate(45deg) !important;
+        background-color: var(--accent) !important;
+      }
+
+      body.close .sidebar-toggle span:nth-child(2) {
+        opacity: 0 !important;
+      }
+
+      body.close .sidebar-toggle span:nth-child(3) {
+        transform: translateY(-6px) rotate(-45deg) !important;
+        background-color: var(--accent) !important;
+      }
+
+      .content {
+        left: 0 !important;
+        position: static !important;
+        width: 100% !important;
+        max-width: 100vw !important;
+        transform: none !important;
+        transition: none !important;
+      }
+
+      body.close .content {
+        transform: none !important;
+      }
+
+      .markdown-section {
+        padding: 68px 18px 48px 18px !important;
+        max-width: 100% !important;
+      }
+
+      .markdown-section h1 {
+        font-size: 1.75rem !important;
+      }
+
+      .markdown-section h2 {
+        font-size: 1.35rem !important;
+      }
+
+      .markdown-section table {
+        display: block !important;
+        overflow-x: auto !important;
+        white-space: nowrap !important;
+      }
+
+      .custom-back-top {
+        bottom: 20px !important;
+        right: 18px !important;
+        width: 40px !important;
+        height: 40px !important;
+      }
+    }
+
+    /* Tablet Breakpoint (769px - 1199px) */
+    @media screen and (min-width: 769px) and (max-width: 1199px) {
+      .markdown-section {
+        padding: 40px 32px 60px 32px !important;
+        max-width: 860px !important;
+      }
+    }
+
+    /* Custom Sleek Scrollbars */
     ::-webkit-scrollbar {
       width: 7px;
       height: 7px;
@@ -404,16 +651,26 @@
 </head>
 <body>
   <div id="app">Loading Staff Interview Prep Knowledge Base...</div>
+
+  <!-- Mobile Backdrop Overlay -->
+  <div id="sidebar-backdrop" class="sidebar-backdrop"></div>
+
+  <!-- Custom Back-to-Top Floating Button -->
+  <button id="custom-back-top" class="custom-back-top" aria-label="Back to Top" title="Back to Top">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="18 15 12 9 6 15"></polyline>
+    </svg>
+  </button>
+
   <script>
     window.$docsify = {
-      name: '<div style="font-weight: 800; font-size: 15px; display: flex; align-items: center; justify-content: center; gap: 8px;"><span>⚡</span><span>Staff Backend Prep</span></div><div style="font-size: 11px; opacity: 0.7; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; margin-top: 4px; text-align: center;">14 Modules &bull; 44 Topics</div>',
+      name: '<div style="font-weight: 800; font-size: 14.5px; display: flex; align-items: center; gap: 8px;"><span>⚡</span><span>Staff Backend Prep</span></div><div style="font-size: 11px; opacity: 0.7; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; margin-top: 3px;">14 Modules &bull; 44 Topics</div>',
       repo: '',
       loadSidebar: true,
-      subMaxLevel: 0, // Keep left sidebar clean; in-page navigation handled by right TOC
-      sidebarDisplayLevel: 0, // Top-level modules collapsed until clicked or navigated to
+      subMaxLevel: 0, // Clean sidebar without heading clutter; in-page right TOC handles sections
       auto2top: true,
       search: {
-        maxAge: 86400000, // 24 hours cache
+        maxAge: 86400000, // 24 hours
         paths: [
           '/',
           '/00-core-cs/01-memory-architecture',
@@ -515,15 +772,138 @@
           highlightColor: '#d97706',
           sidebarSublink: '#57606a'
         }
-      }
+      },
+      plugins: [
+        function(hook, vm) {
+          // Setup collapsible navigation folders on each route change
+          hook.doneEach(function() {
+            setupCollapsibleNavigation();
+          });
+
+          // Setup initial interactive listeners once Docsify is ready
+          hook.ready(function() {
+            setupBackToTop();
+            setupBackdrop();
+          });
+        }
+      ]
     };
 
-    // Keyboard shortcut UX: Press '/' to focus search, 'Escape' to blur/clear
+    // Collapsible Navigation Folder Logic
+    function setupCollapsibleNavigation() {
+      var sidebarNav = document.querySelector('.sidebar-nav');
+      if (!sidebarNav) return;
+
+      var items = sidebarNav.querySelectorAll('li');
+      items.forEach(function(li) {
+        var subUl = li.querySelector('ul');
+        if (!subUl) {
+          li.classList.add('nav-file');
+          return;
+        }
+
+        li.classList.add('nav-folder');
+        var header = li.querySelector('strong') || li.querySelector('p') || li.firstElementChild;
+
+        if (header && !header.dataset.hasCollapseListener) {
+          header.dataset.hasCollapseListener = 'true';
+          header.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            li.classList.toggle('folder-open');
+          });
+        }
+      });
+
+      // Auto-open active route's folder
+      var hash = decodeURIComponent(location.hash);
+      var cleanHash = hash.replace(/\.md$/, '');
+      var activeLink = sidebarNav.querySelector('a[href="' + hash + '"]') ||
+                       sidebarNav.querySelector('a[href="' + cleanHash + '"]') ||
+                       sidebarNav.querySelector('a.active') ||
+                       sidebarNav.querySelector('.active a');
+
+      if (activeLink) {
+        var parent = activeLink.parentElement;
+        while (parent && parent !== sidebarNav) {
+          if (parent.classList.contains('nav-folder')) {
+            parent.classList.add('folder-open');
+          }
+          parent = parent.parentElement;
+        }
+      }
+
+      // Close mobile drawer when an article link is clicked
+      sidebarNav.addEventListener('click', function(e) {
+        var a = e.target.tagName === 'A' ? e.target : e.target.closest('a');
+        if (a) {
+          if (window.innerWidth <= 768) {
+            document.body.classList.remove('close');
+          }
+        }
+      });
+    }
+
+    // Mobile Backdrop Dimmer Logic
+    function setupBackdrop() {
+      var backdrop = document.getElementById('sidebar-backdrop');
+      if (backdrop) {
+        backdrop.addEventListener('click', function() {
+          document.body.classList.remove('close');
+        });
+      }
+
+      // Stop propagation on sidebar clicks so interacting with search or folders doesn't close drawer
+      var sidebar = document.querySelector('.sidebar');
+      if (sidebar) {
+        sidebar.addEventListener('click', function(e) {
+          if (e.target.tagName !== 'A' && !e.target.closest('a')) {
+            e.stopPropagation();
+          }
+        });
+      }
+    }
+
+    // Bulletproof Back-to-Top Button Logic
+    function setupBackToTop() {
+      var btn = document.getElementById('custom-back-top');
+      if (!btn) return;
+
+      function onScroll() {
+        var scrollY = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+        if (scrollY > 280) {
+          btn.classList.add('visible');
+        } else {
+          btn.classList.remove('visible');
+        }
+      }
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      document.addEventListener('scroll', onScroll, { passive: true });
+
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+      });
+
+      onScroll();
+    }
+
+    // Keyboard Shortcuts: Press '/' to focus search, 'Escape' to clear/blur
     window.addEventListener('keydown', function(e) {
       if (e.key === '/' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
         e.preventDefault();
         var searchInput = document.querySelector('.search input');
         if (searchInput) {
+          // If sidebar closed on mobile, open it first
+          if (window.innerWidth <= 768 && !document.body.classList.contains('close')) {
+            document.body.classList.add('close');
+          }
           searchInput.focus();
           searchInput.select();
         }
@@ -544,17 +924,11 @@
   <!-- Full-Text Search Plugin -->
   <script src="//cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.min.js"></script>
 
-  <!-- Sidebar Collapse Plugin -->
-  <script src="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/docsify-sidebar-collapse.min.js"></script>
-
   <!-- In-Page Right TOC Plugin -->
   <script src="//cdn.jsdelivr.net/npm/docsify-plugin-toc@latest/dist/docsify-plugin-toc.min.js"></script>
 
   <!-- Top Reading Progress Bar Plugin -->
   <script src="//cdn.jsdelivr.net/npm/docsify-progress@latest/dist/progress.min.js"></script>
-
-  <!-- Back To Top Floating Action Button -->
-  <script src="//cdn.jsdelivr.net/npm/docsify-back-to-top/dist/docsify-back-to-top.min.js"></script>
 
   <!-- Copy Code Plugin -->
   <script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
